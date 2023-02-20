@@ -33,14 +33,15 @@
             if (preg_match("/^(5[1-5]|62|67)/", $cardNumber)) {
                 return 'MasterCard';
             }
-            if (preg_match("/^(4[1-9]|14)/", $cardNumber)) {
+            if (preg_match("/^(4[0-9]|14)/", $cardNumber)) {
                 return 'VISA';
             }
             return 'название эмитента не определено';
         }
         public function validate($cardNumber) {
-            $validateCard = $this->checkAmount($cardNumber);
-            $issuer = $this->getIssuer($cardNumber);
+            $card = str_replace(' ', '', $cardNumber);
+            $validateCard = $this->checkAmount($card);
+            $issuer = $this->getIssuer($card);
             return  "Валидность : $validateCard, Эминент : $issuer";
         }
     }
